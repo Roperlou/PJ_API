@@ -8,11 +8,11 @@ class Distance
 {
 
     /**
-     * callApi
+     * Обращается в стороннему сервису для получения расстояния между городами
      *
      * @param  mixed $point_1
      * @param  mixed $point_2
-     * @return string
+     *
      */
 
     public function callApi($point_1, $point_2){

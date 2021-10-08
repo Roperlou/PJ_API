@@ -32,7 +32,7 @@ class MainController extends Controller
     }
 
     /**
-     * Присваивает водителю поле 'travel_time' и сортирует по возрастанию этого поля, также присваивает поле 'age'
+     * Присваивает водителю поле 'travel_time' и поле 'age'
      *
      * @param  integer $id
      * @param  string $p1
