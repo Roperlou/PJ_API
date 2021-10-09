@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Driver;
 use Illuminate\Http\Request;
+use App\Http\Requests\DriverRequest;
 
 class DriverController extends Controller
 {
@@ -40,9 +41,13 @@ class DriverController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DriverRequest $request)
     {
-        //
+        $driver = Driver::create($request->only('full_name', 'birth_date'));
+        foreach ($request->only('bus_models') as $model){
+            $driver->buses()->attach($model);
+        }
+        return $driver;
     }
 
     /**
@@ -78,7 +83,10 @@ class DriverController extends Controller
      */
     public function update(Request $request, Driver $driver)
     {
-        //
+        $driver = Driver::findOrFail($driver->id);
+        $driver->fill($request->only('full_name', 'birth_date'));
+        $driver->save();
+        return $driver;
     }
 
     /**

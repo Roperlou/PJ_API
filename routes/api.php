@@ -15,7 +15,7 @@ use App\Http\Controllers\MainController;
 |
 */
 
-Route::resource('drivers', DriverController::class)->only(['index', 'show']);
+Route::apiResource('drivers', DriverController::class);
 
 Route::get('/drivers/getTravelTime/{Point_1}|{Point_2}', [MainController::class, 'getTravelTimeForAll']);
 

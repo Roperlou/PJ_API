@@ -15,9 +15,13 @@ class Driver extends Model
         'buses',
     ];
 
+    protected $fillable = [
+        'full_name',
+        'birth_date',
+    ];
+
     /**
-     *      * Связь между водителем и автобусами
-     *
+     * Связь между водителем и автобусами
      *
      */
     public function buses()
