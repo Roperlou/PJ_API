@@ -58,7 +58,8 @@ class Driver extends Model
     {
             $diff = date( 'Ymd' ) - date( 'Ymd', strtotime($this->birth_date) );
 
-            return substr( $diff, 0, -4 );
+            return $this->age = substr( $diff, 0, -4 );
+
     }
 
     /**

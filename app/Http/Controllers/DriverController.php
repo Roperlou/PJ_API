@@ -101,7 +101,7 @@ class DriverController extends Controller
          foreach ($request->only('bus_models')['bus_models'] as $model){
              $driver->buses()->attach($model);
          }
-        return response()->json($request->only('bus_models'));
+        return response()->json($driver);
     }
 
     /**

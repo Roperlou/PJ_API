@@ -41,8 +41,20 @@
                     {
                         "name": "bus_average_speed",
                         "in": "query",
-                        "description": "Driver birth_date",
+                        "description": "Average speed",
                         "required": true
+                    },
+                    {
+                        "name": "drivers[]",
+                        "in": "query",
+                        "description": "Drivers for this model",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
                     }
                 ],
                 "responses": {
@@ -106,7 +118,7 @@
                     {
                         "name": "bus_average_speed",
                         "in": "query",
-                        "description": "Driver birth_date",
+                        "description": "Average speed",
                         "required": true
                     }
                 ],
@@ -294,6 +306,128 @@
                         "name": "driver_id",
                         "in": "path",
                         "description": "Driver id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "404": {
+                        "description": "Driver is not found"
+                    }
+                }
+            }
+        },
+        "/api/drivers/getTravelTime/{point_1}|{point_2}": {
+            "get": {
+                "tags": [
+                    "Travel time"
+                ],
+                "summary": "Get travel time between two points for all drivers",
+                "description": "Get trevel time to all drivers",
+                "operationId": "cb99b3f443bfbf928f386b3ec9d464d9",
+                "parameters": [
+                    {
+                        "name": "point_1",
+                        "in": "path",
+                        "description": "Point 1",
+                        "required": true
+                    },
+                    {
+                        "name": "point_2",
+                        "in": "path",
+                        "description": "Point 2",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "404": {
+                        "description": "Driver is not found"
+                    }
+                }
+            }
+        },
+        "/api/drivers/{driver_id}/getTravelTime/{point_1}|{point_2}": {
+            "get": {
+                "tags": [
+                    "Travel time"
+                ],
+                "summary": "Get travel time between two points for 1 driver",
+                "description": "Get trevel time driver",
+                "operationId": "58abf8bc495e7251ca6ad979f1f20acf",
+                "parameters": [
+                    {
+                        "name": "driver_id",
+                        "in": "path",
+                        "description": "Driver id",
+                        "required": true
+                    },
+                    {
+                        "name": "point_1",
+                        "in": "path",
+                        "description": "Point 1",
+                        "required": true
+                    },
+                    {
+                        "name": "point_2",
+                        "in": "path",
+                        "description": "Point 2",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "404": {
+                        "description": "Driver is not found"
+                    }
+                }
+            }
+        },
+        "/api/drivers/restore/{driver_id}": {
+            "get": {
+                "tags": [
+                    "Drivers"
+                ],
+                "summary": "Get driver by id",
+                "description": "Get driver by id",
+                "operationId": "90ac2931d518699fdd95d977054f5fd6",
+                "parameters": [
+                    {
+                        "name": "driver_id",
+                        "in": "path",
+                        "description": "Driver id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "404": {
+                        "description": "Driver is not found"
+                    }
+                }
+            }
+        },
+        "/api/drivers/restore/{bus_id}": {
+            "get": {
+                "tags": [
+                    "Buses"
+                ],
+                "summary": "Restore bus by id",
+                "description": "Restore bus by id",
+                "operationId": "37c7b21014d27dc990c3f1168b719f00",
+                "parameters": [
+                    {
+                        "name": "bus_id",
+                        "in": "path",
+                        "description": "Bus id",
                         "required": true
                     }
                 ],

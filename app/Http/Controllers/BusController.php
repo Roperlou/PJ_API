@@ -62,10 +62,18 @@ class BusController extends Controller
      *     @OA\Parameter(
      *         name="bus_average_speed",
      *         in="query",
-     *         description="Driver birth_date",
+     *         description="Average speed",
      *         required=true,
      *     ),
      *
+     *     @OA\Parameter(
+     *         name="drivers[]",
+     *         in="query",
+     *         description="Drivers for this model",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="array", @OA\Items(type="integer")),
+     *     ),
      *
      *     @OA\Response(
      *         response=200,
@@ -83,6 +91,9 @@ class BusController extends Controller
     {
 
         $bus = Bus::create($request->only('bus_name', 'bus_average_speed'));
+        foreach ($request->only('drivers')['drivers'] as $driver){
+            $bus->drivers()->attach($driver);
+        }
         return $bus;
     }
 
@@ -153,7 +164,7 @@ class BusController extends Controller
      *     @OA\Parameter(
      *         name="bus_average_speed",
      *         in="query",
-     *         description="Driver birth_date",
+     *         description="Average speed",
      *         required=true,
      *     ),
      *
