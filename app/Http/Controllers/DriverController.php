@@ -58,7 +58,7 @@ class DriverController extends Controller
      */
     public function show(Driver $driver)
     {
-        $driver = Driver::find($driver)->first();
+        $driver = Driver::findOrFail($driver->id);
         $driver->age = $driver->getAge();
         return $driver;
     }
@@ -111,9 +111,9 @@ class DriverController extends Controller
     {
         $driver = Driver::findOrFail($driver->id);
 
-        $driver->buses()->detach();
+        //$driver->buses()->detach();
 
-        $driver->delete($driver->id);
+        $driver->delete();
 
         return $driver;
     }

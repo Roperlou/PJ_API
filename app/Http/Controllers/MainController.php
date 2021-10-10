@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Distance;
 use App\Models\Driver;
+use App\Models\Bus;
 
 class MainController extends Controller
 {
@@ -52,4 +53,19 @@ class MainController extends Controller
         return response()->json($driver);
     }
 
+    public function restoreDriver($id){
+
+        $driver = Driver::onlyTrashed()->find($id);
+        $driver->restore();
+
+        return $driver;
+    }
+
+    public function restoreBus($id){
+
+        $bus = Bus::onlyTrashed()->find($id);
+        $bus->restore();
+
+        return $bus;
+    }
 }
