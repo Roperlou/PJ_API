@@ -8,9 +8,23 @@ use App\Models\Bus;
 class BusController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @OA\Get(
+     *     path="/api/buses",
+     *     summary="Get list of buses",
+     *     tags={"Buses"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @OA\Schema(
+     *             type="array",
+     *             @OA\Items(ref="#/definitions/Bus")
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Ooops, something wrong",
+     *     )
+     * )
      */
     public function index()
     {
@@ -30,10 +44,40 @@ class BusController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @OA\Post(
+     *     path="/api/buses",
+     *     summary="Store bus",
+     *     tags={"Buses"},
+     *     description="Store driver",
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     *     @OA\Parameter(
+     *         name="bus_name",
+     *         in="query",
+     *         description="Bus name",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string"),
+     *     ),
+     *
+     *     @OA\Parameter(
+     *         name="bus_average_speed",
+     *         in="query",
+     *         description="Driver birth_date",
+     *         required=true,
+     *     ),
+     *
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @OA\Schema(ref="#/definitions/Bus"),
+     *
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Bus is not found",
+     *     )
+     * )
      */
     public function store(Request $request)
     {
@@ -43,10 +87,28 @@ class BusController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *     path="/api/buses/{bus_id}",
+     *     summary="Get bus by id",
+     *     tags={"Buses"},
+     *     description="Get bus by id",
+     *     @OA\Parameter(
+     *         name="bus_id",
+     *         in="path",
+     *         description="Bus id",
+     *         required=true,
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @OA\Schema(ref="#/definitions/Bus"),
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Bus is not found",
+     *     )
+     * )
      */
     public function show(Bus $bus)
     {
@@ -66,15 +128,51 @@ class BusController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @OA\Put(
+     *     path="/api/buses/{bus_id}",
+     *     summary="Update bus",
+     *     tags={"Buses"},
+     *     description="Update bus",
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  i\App\Models\Bus $bus
-     * @return \Illuminate\Http\Response
+     *     @OA\Parameter(
+     *         name="bus_id",
+     *         in="path",
+     *         description="Bus id",
+     *         required=true,
+     *     ),
+     *
+     *     @OA\Parameter(
+     *         name="bus_name",
+     *         in="query",
+     *         description="Bus name",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string"),
+     *     ),
+     *
+     *     @OA\Parameter(
+     *         name="bus_average_speed",
+     *         in="query",
+     *         description="Driver birth_date",
+     *         required=true,
+     *     ),
+     *
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @OA\Schema(ref="#/definitions/Bus"),
+     *
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Bus is not found",
+     *     )
+     * )
      */
     public function update(Request $request, Bus $bus)
     {
-        $bus = Bus::indOrFail($bus->id);
+        $bus = Bus::findOrFail($bus->id);
 
         $bus ->fill($request->only('bus_name', 'bus_average_speed'));
 
@@ -84,10 +182,28 @@ class BusController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @OA\Delete(
+     *     path="/api/buses/{bus_id}",
+     *     summary="Get bus by id",
+     *     tags={"Buses"},
+     *     description="Get bus by id",
+     *     @OA\Parameter(
+     *         name="bus_id",
+     *         in="path",
+     *         description="Bus id",
+     *         required=true,
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @OA\Schema(ref="#/definitions/Bus"),
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Bus is not found",
+     *     )
+     * )
      */
     public function destroy(Bus $bus)
     {

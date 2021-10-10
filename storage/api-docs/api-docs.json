@@ -1,0 +1,314 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "PJ tets API",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/buses": {
+            "get": {
+                "tags": [
+                    "Buses"
+                ],
+                "summary": "Get list of buses",
+                "operationId": "f519550ca830b5dcb346e18781ed50b9",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "404": {
+                        "description": "Ooops, something wrong"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Buses"
+                ],
+                "summary": "Store bus",
+                "description": "Store driver",
+                "operationId": "e1409a5d1e40f031070c6614524fe308",
+                "parameters": [
+                    {
+                        "name": "bus_name",
+                        "in": "query",
+                        "description": "Bus name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "bus_average_speed",
+                        "in": "query",
+                        "description": "Driver birth_date",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "404": {
+                        "description": "Bus is not found"
+                    }
+                }
+            }
+        },
+        "/api/buses/{bus_id}": {
+            "get": {
+                "tags": [
+                    "Buses"
+                ],
+                "summary": "Get bus by id",
+                "description": "Get bus by id",
+                "operationId": "22bc359e408ac8a6e08d850d903ba82e",
+                "parameters": [
+                    {
+                        "name": "bus_id",
+                        "in": "path",
+                        "description": "Bus id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "404": {
+                        "description": "Bus is not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Buses"
+                ],
+                "summary": "Update bus",
+                "description": "Update bus",
+                "operationId": "528cbf491636451830cc9b2216158377",
+                "parameters": [
+                    {
+                        "name": "bus_id",
+                        "in": "path",
+                        "description": "Bus id",
+                        "required": true
+                    },
+                    {
+                        "name": "bus_name",
+                        "in": "query",
+                        "description": "Bus name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "bus_average_speed",
+                        "in": "query",
+                        "description": "Driver birth_date",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "404": {
+                        "description": "Bus is not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Buses"
+                ],
+                "summary": "Get bus by id",
+                "description": "Get bus by id",
+                "operationId": "d2554bb782cc43f0c253cae767a21b47",
+                "parameters": [
+                    {
+                        "name": "bus_id",
+                        "in": "path",
+                        "description": "Bus id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "404": {
+                        "description": "Bus is not found"
+                    }
+                }
+            }
+        },
+        "/api/drivers": {
+            "get": {
+                "tags": [
+                    "Drivers"
+                ],
+                "summary": "Get list of drivers",
+                "operationId": "90f1e2d7ba23baa1e136288ed235666c",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "404": {
+                        "description": "Ooops, something wrong"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Drivers"
+                ],
+                "summary": "Store driver",
+                "description": "Store driver",
+                "operationId": "6bdf167696d642223e0d27e88a0b4896",
+                "parameters": [
+                    {
+                        "name": "full_name",
+                        "in": "query",
+                        "description": "Driver name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "birth_date",
+                        "in": "query",
+                        "description": "Driver birth_date",
+                        "required": true
+                    },
+                    {
+                        "name": "bus_models[]",
+                        "in": "query",
+                        "description": "Driver available bus models",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "404": {
+                        "description": "Driver is not found"
+                    }
+                }
+            }
+        },
+        "/api/drivers/{driver_id}": {
+            "get": {
+                "tags": [
+                    "Drivers"
+                ],
+                "summary": "Get driver by id",
+                "description": "Get driver by id",
+                "operationId": "dc629a74d6c574dedb9c9fc6b99c3063",
+                "parameters": [
+                    {
+                        "name": "driver_id",
+                        "in": "path",
+                        "description": "Driver id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "404": {
+                        "description": "Driver is not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Drivers"
+                ],
+                "summary": "Update driver",
+                "description": "Update driver",
+                "operationId": "d96d5ec1ba9f9548fc54429e3d0666cb",
+                "parameters": [
+                    {
+                        "name": "driver_id",
+                        "in": "path",
+                        "description": "Driver id",
+                        "required": true
+                    },
+                    {
+                        "name": "full_name",
+                        "in": "query",
+                        "description": "Driver name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "birth_date",
+                        "in": "query",
+                        "description": "Driver birth_date",
+                        "required": true
+                    },
+                    {
+                        "name": "bus_models[]",
+                        "in": "query",
+                        "description": "Driver available bus models",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "404": {
+                        "description": "Driver is not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Drivers"
+                ],
+                "summary": "Delete driver by id",
+                "description": "Get driver by id",
+                "operationId": "901e320a726264da071fa9a5f1377e96",
+                "parameters": [
+                    {
+                        "name": "driver_id",
+                        "in": "path",
+                        "description": "Driver id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "404": {
+                        "description": "Driver is not found"
+                    }
+                }
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}

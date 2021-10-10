@@ -8,10 +8,26 @@ use App\Http\Requests\DriverRequest;
 
 class DriverController extends Controller
 {
+
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @OA\Get(
+     *     path="/api/drivers",
+     *     summary="Get list of drivers",
+     *     tags={"Drivers"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @OA\Schema(
+     *             type="array",
+     *             @OA\Items(ref="#/definitions/Driver")
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Ooops, something wrong",
+     *     )
+     * )
      */
     public function index()
     {
@@ -22,7 +38,7 @@ class DriverController extends Controller
             $driver->age = $driver->getAge();
         }
 
-        return $drivers;
+        return response()->json($drivers);
     }
 
     /**
@@ -36,25 +52,81 @@ class DriverController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @OA\Post(
+     *     path="/api/drivers",
+     *     summary="Store driver",
+     *     tags={"Drivers"},
+     *     description="Store driver",
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     *     @OA\Parameter(
+     *         name="full_name",
+     *         in="query",
+     *         description="Driver name",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string"),
+     *     ),
+     *
+     *     @OA\Parameter(
+     *         name="birth_date",
+     *         in="query",
+     *         description="Driver birth_date",
+     *         required=true,
+     *     ),
+     *
+     *     @OA\Parameter(
+     *         name="bus_models[]",
+     *         in="query",
+     *         description="Driver available bus models",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="array", @OA\Items(type="integer")),
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @OA\Schema(ref="#/definitions/Driver"),
+     *
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Driver is not found",
+     *     )
+     * )
      */
     public function store(DriverRequest $request)
     {
-        $driver = Driver::create($request->only('full_name', 'birth_date'));
-        foreach ($request->only('bus_models') as $model){
-            $driver->buses()->attach($model);
-        }
-        return $driver;
+         $driver = Driver::create($request->only('full_name', 'birth_date'));
+         foreach ($request->only('bus_models')['bus_models'] as $model){
+             $driver->buses()->attach($model);
+         }
+        return response()->json($request->only('bus_models'));
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *     path="/api/drivers/{driver_id}",
+     *     summary="Get driver by id",
+     *     tags={"Drivers"},
+     *     description="Get driver by id",
+     *     @OA\Parameter(
+     *         name="driver_id",
+     *         in="path",
+     *         description="Driver id",
+     *         required=true,
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @OA\Schema(ref="#/definitions/Driver"),
      *
-     * @param  \App\Models\Driver  $driver
-     * @return \Illuminate\Http\Response
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Driver is not found",
+     *     )
+     * )
      */
     public function show(Driver $driver)
     {
@@ -75,11 +147,55 @@ class DriverController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @OA\Put(
+     *     path="/api/drivers/{driver_id}",
+     *     summary="Update driver",
+     *     tags={"Drivers"},
+     *     description="Update driver",
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Driver  $driver
-     * @return \Illuminate\Http\Response
+     *     @OA\Parameter(
+     *         name="driver_id",
+     *         in="path",
+     *         description="Driver id",
+     *         required=true,
+     *     ),
+     *
+     *     @OA\Parameter(
+     *         name="full_name",
+     *         in="query",
+     *         description="Driver name",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string"),
+     *     ),
+     *
+     *     @OA\Parameter(
+     *         name="birth_date",
+     *         in="query",
+     *         description="Driver birth_date",
+     *         required=true,
+     *     ),
+     *
+     *     @OA\Parameter(
+     *         name="bus_models[]",
+     *         in="query",
+     *         description="Driver available bus models",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="array", @OA\Items(type="integer")),
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @OA\Schema(ref="#/definitions/Driver"),
+     *
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Driver is not found",
+     *     )
+     * )
      */
     public function update(Request $request, Driver $driver)
     {
@@ -87,7 +203,7 @@ class DriverController extends Controller
 
         $driver->fill($request->only('full_name', 'birth_date'));
 
-        $models = $request->only('bus_models')['bus_models'];
+        $models = $request->only('bus_models');
 
         foreach ($models as $model)
         {
@@ -102,16 +218,32 @@ class DriverController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @OA\Delete(
+     *     path="/api/drivers/{driver_id}",
+     *     summary="Delete driver by id",
+     *     tags={"Drivers"},
+     *     description="Get driver by id",
+     *     @OA\Parameter(
+     *         name="driver_id",
+     *         in="path",
+     *         description="Driver id",
+     *         required=true,
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @OA\Schema(ref="#/definitions/Driver"),
      *
-     * @param  \App\Models\Driver  $driver
-     * @return \Illuminate\Http\Response
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Driver is not found",
+     *     )
+     * )
      */
     public function destroy(Driver $driver)
     {
         $driver = Driver::findOrFail($driver->id);
-
-        //$driver->buses()->detach();
 
         $driver->delete();
 

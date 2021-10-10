@@ -6,6 +6,24 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+
+/**
+ * @SWG\Definition(
+ *  definition="Driver",
+ *  @SWG\Property(
+ *      property="id",
+ *      type="integer"
+ *  ),
+ *  @SWG\Property(
+ *      property="full_name",
+ *      type="string"
+ *  ),
+ *  @SWG\Property(
+ *      property="birth_date",
+ *      type="date"
+ *  )
+ * )
+ */
 class Driver extends Model
 {
     use HasFactory;
