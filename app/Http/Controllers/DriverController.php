@@ -84,8 +84,20 @@ class DriverController extends Controller
     public function update(Request $request, Driver $driver)
     {
         $driver = Driver::findOrFail($driver->id);
+
         $driver->fill($request->only('full_name', 'birth_date'));
+
+        $models = $request->only('bus_models')['bus_models'];
+
+        foreach ($models as $model)
+        {
+            if (!$driver->buses->find($model))
+            {
+               $driver->buses()->attach($model);
+            }
+    }
         $driver->save();
+
         return $driver;
     }
 
@@ -97,6 +109,12 @@ class DriverController extends Controller
      */
     public function destroy(Driver $driver)
     {
-        //
+        $driver = Driver::findOrFail($driver->id);
+
+        $driver->buses()->detach();
+
+        $driver->delete($driver->id);
+
+        return $driver;
     }
 }

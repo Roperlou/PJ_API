@@ -26,7 +26,6 @@ class DriverRequest extends FormRequest
         $rules = [
             'fill_name' => 'require|string',
             'birth_date' => 'required|date|date_format:Y-m-d',
-            'bus_models' => 'required',
         ];
 
         switch ($this->getMethod())
@@ -36,6 +35,7 @@ class DriverRequest extends FormRequest
         case 'PUT':
           return [
             'id' => 'required|integer|exists:drivers,id', //должен существовать. Можно вот так: unique:games,id,' . $this->route('game'),
+           'bus_models' => 'exists|buses,id',
             ] + $rules; // и берем все остальные правила
         // case 'PATCH':
         case 'DELETE':
