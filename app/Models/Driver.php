@@ -28,11 +28,13 @@ class Driver extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
     protected $hidden = [
         'updated_at',
         'created_at',
         'deleted_at',
         'buses',
+
     ];
 
     protected $fillable = [
@@ -70,8 +72,15 @@ class Driver extends Model
      */
     public function getTravelTime($distance)
     {
-        $travelTime = ceil($distance / $this->buses->max('bus_average_speed') / 8);
+        if ($this->buses->isEmpty())
+        {
+            return '404';
+
+        } else {
+
+        $travelTime = ceil($distance / $this->buses()->max('bus_average_speed') / 8);
 
         return intval($travelTime);
+        }
     }
 }

@@ -49,6 +49,8 @@ class MainController extends Controller
 
         foreach ($drivers as $driver)
         {
+            $driver->age = $driver->getAge();
+
             $driver->travel_time = $driver->getTravelTime($distance);
         }
 
@@ -101,6 +103,8 @@ class MainController extends Controller
 
         $driver = Driver::find($id);
 
+        $driver->age = $driver->getAge();
+
         $driver->travel_time = $driver->getTravelTime($distance);
 
         return response()->json($driver);
@@ -141,7 +145,7 @@ class MainController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/drivers/restore/{bus_id}",
+     *     path="/api/buses/restore/{bus_id}",
      *     summary="Restore bus by id",
      *     tags={"Buses"},
      *     description="Restore bus by id",
@@ -170,5 +174,52 @@ class MainController extends Controller
         $bus->restore();
 
         return $bus;
+    }
+
+
+    /**
+     * @OA\Get(
+     *     path="/api/drivers/{driver_id}/deleteRelations",
+     *     summary="Delete driver's available buses",
+     *     tags={"Drivers"},
+     *     description="UDelete driver's available buses",
+     *
+     *     @OA\Parameter(
+     *         name="driver_id",
+     *         in="path",
+     *         description="Driver id",
+     *         required=true,
+     *     ),
+     *
+     *     @OA\Parameter(
+     *         name="bus_models[]",
+     *         in="query",
+     *         description="Driver available bus models",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="array", @OA\Items(type="integer")),
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @OA\Schema(ref="#/definitions/Driver"),
+     *
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Driver is not found",
+     *     )
+     * )
+     */
+    public function deleteRelations(Request $request, $id)
+    {
+        $driver = Driver::findOrFail($id);
+
+        foreach ($request->only('bus_model') as $model){
+            $driver->buses()->detach($model);
+        }
+
+        return $driver;
     }
 }

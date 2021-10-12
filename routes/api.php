@@ -24,6 +24,8 @@ Route::get('drivers/restore/{id}', [MainController::class, 'restoreDriver']);
 
 Route::get('buses/restore/{id}', [MainController::class, 'restoreBus']);
 
+Route::get('drivers/{id}/deleteRelations',  [MainController::class, 'deleteRelations']);
+
 Route::get('/drivers/getTravelTime/{Point_1}|{Point_2}', [MainController::class, 'getTravelTimeForAll']);
 
 Route::get('/drivers/{id}/getTravelTime/{Point_1}|{Point_2}', [MainController::class, 'getTravelTimeForOne']);

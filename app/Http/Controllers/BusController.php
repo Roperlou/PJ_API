@@ -30,7 +30,7 @@ class BusController extends Controller
     {
         $buses = Bus::orderBy('bus_average_speed')->get();
 
-        return $buses;
+        return response()->json($buses);
     }
 
     /**
@@ -94,7 +94,7 @@ class BusController extends Controller
         foreach ($request->only('drivers')['drivers'] as $driver){
             $bus->drivers()->attach($driver);
         }
-        return $bus;
+        return response()->json($bus);
     }
 
     /**
@@ -123,9 +123,12 @@ class BusController extends Controller
      */
     public function show(Bus $bus)
     {
-        $bus = Bus::findOrFail($bus->id);
-        return $bus;
+        $bus =Bus::findOrFail($bus->id);
+        return response()->json($bus);
+
     }
+
+
 
     /**
      * Show the form for editing the specified resource.

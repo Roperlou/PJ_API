@@ -132,7 +132,7 @@ class DriverController extends Controller
     {
         $driver = Driver::findOrFail($driver->id);
         $driver->age = $driver->getAge();
-        return $driver;
+        return response()->json($driver);
     }
 
     /**
@@ -214,7 +214,7 @@ class DriverController extends Controller
     }
         $driver->save();
 
-        return $driver;
+        return response()->json($driver);
     }
 
     /**
@@ -247,6 +247,6 @@ class DriverController extends Controller
 
         $driver->delete();
 
-        return $driver;
+        return response()->json($driver);
     }
 }

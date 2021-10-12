@@ -415,20 +415,58 @@
                 }
             }
         },
-        "/api/drivers/restore/{bus_id}": {
+        "/api/buses/restore/{bus_id}": {
             "get": {
                 "tags": [
                     "Buses"
                 ],
                 "summary": "Restore bus by id",
                 "description": "Restore bus by id",
-                "operationId": "37c7b21014d27dc990c3f1168b719f00",
+                "operationId": "df9fdd4be4cd2ec5b92949cb128bcb21",
                 "parameters": [
                     {
                         "name": "bus_id",
                         "in": "path",
                         "description": "Bus id",
                         "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "404": {
+                        "description": "Driver is not found"
+                    }
+                }
+            }
+        },
+        "/api/drivers/{driver_id}/deleteRelations": {
+            "get": {
+                "tags": [
+                    "Drivers"
+                ],
+                "summary": "Delete driver's available buses",
+                "description": "UDelete driver's available buses",
+                "operationId": "c8fcf00b239dfcab2f79a2b61ba3562d",
+                "parameters": [
+                    {
+                        "name": "driver_id",
+                        "in": "path",
+                        "description": "Driver id",
+                        "required": true
+                    },
+                    {
+                        "name": "bus_models[]",
+                        "in": "query",
+                        "description": "Driver available bus models",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
                     }
                 ],
                 "responses": {
