@@ -195,7 +195,7 @@ class MainController extends Controller
      *         name="bus_models[]",
      *         in="query",
      *         description="Driver available bus models",
-     *         required=false,
+     *         required=true,
      *         @OA\Schema(
      *             type="array", @OA\Items(type="integer")),
      *     ),
