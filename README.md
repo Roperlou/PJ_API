@@ -10,10 +10,4 @@
 10. Запустить php artisan db:seed --class=PivotSeeder
 11. Запустить php artisan serve
 
-hostname/api/drivers/ -> получить список всех водителей
-
-hostname/api/drivers/{id} -> получить одного водителя
-
-hostname/api/drivers/getTravelTime/{City_1}|{City_2} -> получить список всех водителей с расчитаным временем путешествия от City_1 до City_2
-
-hostname/api/drivers/{id}/getTravelTime/{City_1}|{City_2} -> получить одного водителя с расчитаным временем путешествия от City_1 до City_2
+hostname/api/documentation
